@@ -11,7 +11,11 @@ const port = process.env.PORT ? process.env.PORT : "3000";
 
 require('./config/db.js');
 
+//Controllers imports
+const authController = require("./controllers/auth.js");
+
 // MIDDLEWARE SECTION
+app.use("/auth", authController);
 
 // Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +23,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
+
+
+// Route 
+app.get("/", async (req, res) => {
+    res.render("index.ejs");
+  });
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
